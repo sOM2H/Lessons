@@ -16,10 +16,7 @@ class Station
   end
 
   def print_trains_by_type
-    puts "Passengers:"
-    @trains.each{|t| puts t.number if t.type == "passenger"}
-    puts "Freight:"
-    @trains.each{|t| puts t.number if t.type == "cargo"}
+    p @trains.each_with_object({}) { |t, hsh| hsh[t.type] = (hsh[t.type] || []) << t.number }
   end
   
   def departure_train train_name
