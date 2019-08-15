@@ -2,18 +2,11 @@ class Route
   attr_reader :first_station, :last_station, :stations
 
   def initialize(first_station, last_station)
-    if first_station.class.name.eql? "Station"
-      @first_station = first_station
-    else
-      raise "First station class must equals 'Station'."
-    end
-
-    if last_station.class.name.eql? "Station"
-       @last_station = last_station
-    else
-      raise "Last station class must equals 'Station'."
-    end
+    @first_station = first_station
+    @last_station = last_station
     @stations = []
+
+    validate!
   end
 
   def print_stations
@@ -23,20 +16,30 @@ class Route
   end
 
   def add_station station
-    if station.class.name.eql? "Station"
-      @stations.push(station)
-    else
-      raise "Station class must equals 'Station'."
-    end
+    return @stations.push(station) if valid? station
+    not_valid_object "Station"
   end
 
   def last_station? station
-    return true if @last_station.eql? station
-    false
+    return (@last_station == station) ? true : false
   end
 
   def first_station? station
-    return true if @first_station.eql? station
-    false
+    return (@first_station == station) ? true : false
+  end
+
+  private
+
+  def valid? object
+    return (object.class.name == "Station") ? true : false
+  end
+
+  def raise_not_valid_object object
+    raise "#{object} class must equals '#{object}'."
+  end
+
+  def validate!
+    raise ArgumentError.new("First station class must equals 'Station'") unless @first_station.class.name == "Station"
+    raise ArgumentError.new("Last station class must equals 'Station'") unless @last_station.class.name == "Station"
   end
 end
