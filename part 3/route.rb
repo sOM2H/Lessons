@@ -21,17 +21,17 @@ class Route
   end
 
   def last_station? station
-    return (@last_station == station) ? true : false
+    @last_station == station
   end
 
   def first_station? station
-    return (@first_station == station) ? true : false
+    @first_station == station
   end
 
   private
 
   def valid? object
-    return (object.class.name == "Station") ? true : false
+    object == "Station"
   end
 
   def raise_not_valid_object object

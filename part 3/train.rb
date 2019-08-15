@@ -11,6 +11,10 @@ class Train
     @current_number_station = 0
   end
 
+  def add_speed n = 5
+    @speed += n
+  end
+
   def print_carriages_count
     puts @carriages_count
   end
@@ -35,13 +39,17 @@ class Train
   end
 
   def add_carriage
-    return (@carriages_count) += 1 if stop?
+    return (@carriages_count += 1) if stop?
     raise_not_stop
   end
 
   def delete_carriage
-    return (@carriages_count) -= 1 if stop?
+    return (@carriages_count-= 1) if stop?
     raise_not_stop
+  end
+
+  def stop
+    @speed = 0
   end
 
   private
@@ -51,7 +59,7 @@ class Train
   end
 
   def stop?
-    return (@speed == 0) ? true : false
+    @speed == 0
   end
 
   def raise_not_stop

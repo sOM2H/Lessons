@@ -12,14 +12,14 @@ class Station
   end
 
   def print_trains
-    @trains.each{ |t| puts t.name}
+    @trains.each{ |t| puts t.number}
   end
 
   def print_trains_by_type
     puts "Passengers:"
-    @trains.each{|t| puts t.name if t.type == "passenger"}
+    @trains.each{|t| puts t.number if t.type == "passenger"}
     puts "Freight:"
-    @trains.each{|t| puts t.name if t.type == "cargo"}
+    @trains.each{|t| puts t.number if t.type == "cargo"}
   end
   
   def departure_train train_name
@@ -28,8 +28,8 @@ class Station
 
   private
 
-  def valid?
-    return (object.class.name == "Train") ? true : false
+  def valid? object
+    object.class.name == "Train"
   end
 
   def raise_not_valid_object object
