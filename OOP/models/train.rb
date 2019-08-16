@@ -12,8 +12,6 @@ class Train
     validate!
   end
   
-  protected
-  
   def add_speed n = 5
     @speed += n
   end
