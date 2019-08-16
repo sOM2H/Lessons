@@ -22,8 +22,12 @@ while input = gets.chomp
     puts "Create [class] [arg0] .. [argn] - create class object.\nList [class] - list of object class\nAdd Train to Station [train object id] [ station object id]\nAdd Carriage to Train [carriage object id] [train object id]"
 
   elsif split_input[0] == "Create"
-    if split_input[1] == "Train"
-      train = Train.new(split_input[2], split_input[3])
+    if split_input[1] == "PassangerTrain"
+      train = PassengerTrain.new(split_input[2])
+      trains << train
+      puts "Train #{train.object_id} created!".blue
+    elsif split_input[1] == "CargoTrain"
+      train = CargoTrain.new(split_input[2])
       trains << train
       puts "Train #{train.object_id} created!".blue
     elsif split_input[1] == "Station"
@@ -103,6 +107,8 @@ while input = gets.chomp
     else
       puts "Shit Happens!".red
     end
+  else
+    puts "Not valid command".red
   end
   print "user@user~$ ".green
 end
