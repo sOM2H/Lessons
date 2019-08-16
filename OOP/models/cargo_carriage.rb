@@ -1,4 +1,4 @@
-class CargoTrain < Train
+class CargoCarriage
     def type
       :cargo
     end

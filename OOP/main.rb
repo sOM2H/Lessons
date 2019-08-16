@@ -1,7 +1,8 @@
 require 'colorize'
 require_relative 'models/station'
 require_relative 'models/route'
-require_relative 'models/carriage'
+require_relative 'models/passenger_carriage'
+require_relative 'models/cargo_carriage'
 require_relative 'models/train'
 require_relative 'models/passenger_train'
 require_relative 'models/cargo_train'
@@ -34,8 +35,12 @@ while input = gets.chomp
       station = Station.new(split_input[2])
       stations << station
       puts "Station #{station.object_id} created!".blue
-    elsif split_input[1] == "Carriage"
-      carriage = Carriage.new(split_input[2])
+    elsif split_input[1] == "CargoCarriage"
+      carriage = CargoCarriage.new()
+      carriages << carriage
+      puts "Carriage #{carriage.object_id} created!".blue
+    elsif split_input[1] == "PassengerCarriage"
+      carriage = PasssengerCarriage.new()
       carriages << carriage
       puts "Carriage #{carriage.object_id} created!".blue
     else

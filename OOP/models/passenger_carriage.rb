@@ -1,4 +1,4 @@
-class PassengerTrain < Train
+class PassengerCarriage
     def type
       :passenger
     end
