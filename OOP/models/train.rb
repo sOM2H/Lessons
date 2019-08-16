@@ -1,22 +1,19 @@
 class Train
   attr_accessor :speed, :route
-  attr_reader :number, :type, :carriages_count
+  attr_reader :number, :carriages
 
-  def initialize(number, type, carriages_count)
+  def initialize(number)
     @number = number
     @route = nil
-    @type = type
     @speed = 0
-    @carriages_count = carriages_count
+    @carriages = []
     @current_number_station = 0
+  
+    validate!
   end
-
+  
   def add_speed n = 5
     @speed += n
-  end
-
-  def print_carriages_count
-    puts @carriages_count
   end
 
   def print_speed
@@ -38,9 +35,13 @@ class Train
     raise_route_not_set
   end
 
-  def add_carriage
-    return (@carriages_count += 1) if stop?
-    raise_not_stop
+  def add_carriage carriage
+    if valid_carriage? carriage
+      return (@carriages << carriage) if stop? 
+      raise_not_stop
+    else
+      raise_not_valid_carriage
+    end
   end
 
   def delete_carriage
@@ -68,5 +69,17 @@ class Train
 
   def raise_route_not_set
     raise "Route not set."
+  end
+
+  def validate!
+    raise ArgumentError.new("Number class must equals 'String'") unless @number.class.name == "String"
+  end
+
+  def valid_carriage? carriage
+    carriage.type == type
+  end
+
+  def raise_not_valid_carriage
+    raise "Carriage type must equals '#{self.type}'"
   end
 end
