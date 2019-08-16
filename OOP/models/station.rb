@@ -10,7 +10,7 @@ class Station
   end
 
   def self.all
-    @all
+    @@all
   end
 
   def add_train train
