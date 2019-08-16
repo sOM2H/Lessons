@@ -3,13 +3,12 @@ require "../modules/manufacturer"
 class Train
   include Manufacturer
 
-  attr_accessor :speed, :route, :manufacturer
+  attr_accessor :speed, :route
   attr_reader :number, :carriages
 
-  @@all = []
+   @instanses = {}
 
   def initialize(number)
-    @manufacturer = ""
     @number = number
     @route = nil
     @speed = 0
@@ -17,16 +16,22 @@ class Train
     @current_number_station = 0
   
     validate!
-    @@all << self
+    instanses[number] = self
   end
   
+  def instanses
+    self.class.instanses
+  end
+
   class << self
-    def find number
-      @@all.find {|t| t.number == number}
+    attr_reader :instanses
+
+    def find(number)
+      instanses[number]
     end
 
     def all
-      @@all 
+      instanses
     end
   end
 
