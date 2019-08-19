@@ -6,7 +6,7 @@ class Train
   attr_accessor :speed, :route
   attr_reader :number, :carriages
 
-   @instanses = {}
+  @instanses = {}
 
   def initialize(number)
     @number = number
