@@ -1,5 +1,5 @@
 class CargoCarriage < Carriage
-    def type
-      :cargo
-    end
+  def type
+    :cargo
+  end
 end

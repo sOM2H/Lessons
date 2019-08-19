@@ -1,5 +1,5 @@
 class CargoTrain < Train
-    def type
-      :cargo
-    end
+  def type
+    :cargo
+  end
 end

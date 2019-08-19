@@ -1,5 +1,5 @@
 class PassengerCarriage < Carriage
-    def type
-      :passenger
-    end
+  def type
+    :passenger
+  end
 end

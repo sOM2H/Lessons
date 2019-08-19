@@ -1,4 +1,4 @@
-require "../modules/manufacturer"
+require "./modules/manufacturer"
 
 class Train
   include Manufacturer
