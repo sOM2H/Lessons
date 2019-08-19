@@ -1,6 +1,12 @@
+require "./modules/manufacturer"
+
 class Train
+  include Manufacturer
+
   attr_accessor :speed, :route
   attr_reader :number, :carriages
+
+  @instanses = {}
 
   def initialize(number)
     @number = number
@@ -10,8 +16,25 @@ class Train
     @current_number_station = 0
   
     validate!
+    instanses[number] = self
   end
   
+  def instanses
+    self.class.instanses
+  end
+
+  class << self
+    attr_reader :instanses
+
+    def find(number)
+      instanses[number]
+    end
+
+    def all
+      instanses
+    end
+  end
+
   def add_speed n = 5
     @speed += n
   end
