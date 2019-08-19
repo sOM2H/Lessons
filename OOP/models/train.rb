@@ -6,7 +6,7 @@ class Train
   attr_accessor :speed, :route
   attr_reader :number, :carriages
 
-  @instanses = {}
+  @@instanses = {}
 
   def initialize(number)
     @number = number
@@ -14,24 +14,17 @@ class Train
     @speed = 0
     @carriages = []
     @current_number_station = 0
-  
-    validate!
-    instanses[number] = self
+    
+    (@@instanses[number] = self) if valid?
   end
   
-  def instanses
-    self.class.instanses
-  end
-
   class << self
-    attr_reader :instanses
-
     def find(number)
-      instanses[number]
+      @@instanses[number]
     end
 
     def all
-      instanses
+      @@instanses
     end
   end
 
@@ -94,8 +87,14 @@ class Train
     raise "Route not set."
   end
 
-  def validate!
+  def valid?
+    raise ArgumentError.new("Number must equals /^((\d|[a-zA-Z]){3})-?((\d|[a-zA-Z]){2})$/") unless valid_name? @number
     raise ArgumentError.new("Number class must equals 'String'") unless @number.class.name == "String"
+    true
+  end
+
+  def valid_name? name
+    !/^((\d|[a-zA-Z]){3})-?((\d|[a-zA-Z]){2})$/.match(name).nil?
   end
 
   def valid_carriage? carriage
