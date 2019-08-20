@@ -1,3 +1,5 @@
+require "./models/train"
+
 class Station
   attr_reader :name, :trains
 
@@ -16,8 +18,8 @@ class Station
   end
 
   def add_train train
-    return @trains.push(train) if valid_train? train
-    raise_not_valid_object train
+    valid_train? train
+    @trains.push(train)
   end
 
   def print_trains
@@ -35,15 +37,15 @@ class Station
   private
   
   def valid?
-    raise ArgumentError.new("Name class must equals 'String'") unless @name.class.name == "String"
+    raise ArgumentError.new("Name class must equals 'String'") unless @name.class == String
     true
   end
 
-  def valid_train? object
-    object.class.name.include? "Train"
+  def valid_train? train
+    raise_not_valid_train unless train.class.superclass == Train
   end
 
-  def raise_not_valid_object object
-    raise "#{object} class must equals '#{object}'."
+  def raise_not_valid_train
+    raise "Train class must equals 'Train'."
   end
 end
