@@ -1,3 +1,5 @@
+require "./models/station"
+
 class Route
   attr_reader :first_station, :last_station, :stations
 
@@ -16,8 +18,8 @@ class Route
   end
 
   def add_station station
-    return @stations.push(station) if valid? station
-    not_valid_object "Station"
+    valid? station
+    @stations.push(station) 
   end
 
   def last_station? station
@@ -31,11 +33,11 @@ class Route
   private
 
   def valid? object
-    object == "Station"
+    raise_not_valid_statoin unless object.class == Station 
   end
 
-  def raise_not_valid_object object
-    raise "#{object} class must equals '#{object}'."
+  def raise_not_valid_statoin 
+    raise "Station class must equals 'Station'."
   end
 
   def validate!
