@@ -11,20 +11,18 @@ class PassengerCarriage < Carriage
   end
 
   def occupy_place
-    @occupied_places += 1 unless full?
+    self.occupied_places += 1 unless full?
   end
 
   def free_places
-    @places - @occupied_places
-  end
-
-  def occupied_places
-    @occupied_places
+    @places - self.occupied_places
   end
 
   private
+  
+  attr_writer :occupied_places
 
   def full?
-    @occupied_places == @places
+    self.occupied_places == @places
   end
 end

@@ -11,20 +11,18 @@ class CargoCarriage < Carriage
   end
 
   def occupy_volume(volume = 10)
-    @occupied_volume += volume unless full?
+    self.occupied_volume += volume unless crowded?(volume)
   end
 
   def free_volume
-    @volume - @occupied_volume
-  end
-
-  def occupied_volume
-    @occupied_volume
+    @volume - self.occupied_volume
   end
 
   private
 
-  def full?
-    @occupied_places_count == @places_count
+  attr_writer :occupied_volume
+
+  def crowded? volume
+    (self.occupied_volume + volume) > @volume
   end
 end
