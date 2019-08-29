@@ -13,6 +13,24 @@ require_relative 'models/cargo_train'
 @stations  = []
 @carriages = []
 
+def load_seeds
+  cargo_train = CargoTrain.new("000-00")
+  passenger_train = PassengerTrain.new("000-01")
+  3.times do |i|
+    @stations << Station.new("Station #{i}")
+  end
+  10.times do |i|
+    cargo_carriage = CargoCarriage.new(200)
+    passenger_carriage =  PassengerCarriage.new(200)
+    cargo_train.add_carriage cargo_carriage
+    passenger_train.add_carriage passenger_carriage
+    @carriages << cargo_carriage
+    @carriages << passenger_carriage
+  end
+  @trains << cargo_train
+  @trains << passenger_train
+end
+
 def create_cargo_train name
   begin
     train = CargoTrain.new(name)
@@ -35,7 +53,7 @@ end
 
 def create_cargo_carriage
   begin
-    carriage = CargoCarriage.new()
+    carriage = CargoCarriage.new(count)
     @carriages << carriage
     puts "Carriage #{carriage.object_id} created!".blue
   rescue ArgumentError => e
@@ -45,7 +63,7 @@ end
 
 def create_passenger_carriage
   begin
-    carriage = PassengerCarriage.new()
+    carriage = PassengerCarriage.new(count)
     @carriages << carriage
     puts "Carriage #{carriage.object_id} created!".blue
   rescue ArgumentError => e
@@ -157,9 +175,9 @@ while input = gets.chomp
     elsif split_input[1] == "Station"
       create_station(split_input[2])
     elsif split_input[1] == "CargoCarriage"
-      create_cargo_carriage
+      create_cargo_carriage(split_input[2])
     elsif split_input[1] == "PassengerCarriage"
-      create_passenger_carriage
+      create_passenger_carriage(split_input[2])
     else
       puts "#{split_input[1] || "Class"} not found"
     end
@@ -177,6 +195,8 @@ while input = gets.chomp
     add_carriage_to_train(split_input[4].to_i, split_input[5].to_i)
   elsif input.include? "Unhook Carriage from Train"
     unhook_carriage_from_train(split_input[4].to_i, split_input[5].to_i)
+  elsif input.include? "Load seeds"
+    load_seeds 
   else
     puts "Not valid command".red
   end
