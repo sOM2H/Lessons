@@ -22,6 +22,10 @@ class Station
     @trains.push(train)
   end
 
+  def each_trains
+    @trains.each{ |t| yield t }
+  end
+
   def print_trains
     @trains.each{ |t| puts t.number}
   end

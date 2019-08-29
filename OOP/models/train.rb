@@ -39,6 +39,10 @@ class Train
     puts @speed
   end
 
+  def each_carriages
+    @carriages.each{ |i| yield i }
+  end
+
   def current_station
     identify_station
   end
