@@ -22,7 +22,7 @@ class CargoCarriage < Carriage
 
   attr_writer :occupied_volume
 
-  def crowded? volume
+  def crowded?(volume)
     (self.occupied_volume + volume) > @volume
   end
 end

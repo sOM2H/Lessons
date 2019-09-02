@@ -1,4 +1,4 @@
-require "./models/train"
+require './models/train'
 
 class Station
   attr_reader :name, :trains
@@ -17,35 +17,36 @@ class Station
     end
   end
 
-  def add_train train
+  def add_train(train)
     valid_train? train
     @trains.push(train)
   end
 
   def each_trains
-    @trains.each{ |t| yield t }
+    @trains.each { |t| yield t }
   end
 
   def print_trains
-    @trains.each{ |t| puts t.number}
+    @trains.each { |t| puts t.number }
   end
 
   def print_trains_by_type
     p @trains.each_with_object({}) { |t, hsh| hsh[t.type] = (hsh[t.type] || []) << t.number }
   end
-  
-  def departure_train train_name
+
+  def departure_train(train_name)
     @trains.delete_if { |t| t.name == train_name }
   end
 
   private
-  
+
   def valid?
-    raise ArgumentError.new("Name class must equals 'String'") unless @name.class == String
+    raise ArgumentError.new('Name class must equals', 'String') unless @name.class == String
+
     true
   end
 
-  def valid_train? train
+  def valid_train?(train)
     raise_not_valid_train unless train.class.superclass == Train
   end
 

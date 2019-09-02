@@ -19,7 +19,7 @@ class PassengerCarriage < Carriage
   end
 
   private
-  
+
   attr_writer :occupied_places
 
   def full?

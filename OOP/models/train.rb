@@ -1,5 +1,5 @@
-require "./modules/manufacturer"
-require "./models/route"
+require './modules/manufacturer'
+require './models/route'
 
 class Train
   include Manufacturer
@@ -7,7 +7,7 @@ class Train
   attr_accessor :speed, :route
   attr_reader :number, :carriages
 
-  NUMBER_FORMAT = /^(\d|[a-z]){3}-?((\d{2})|([a-z]{2}))$/
+  NUMBER_FORMAT = /^(\d|[a-z]){3}-?((\d{2})|([a-z]{2}))$/.freeze
 
   @@instanses = {}
 
@@ -17,10 +17,9 @@ class Train
     @speed = 0
     @carriages = []
     @current_number_station = 0
-    
     (@@instanses[number] = self) if valid?
   end
-  
+
   class << self
     def find(number)
       @@instanses[number]
@@ -31,8 +30,8 @@ class Train
     end
   end
 
-  def add_speed(n = 5)
-    @speed += n
+  def add_speed(speed = 5)
+    @speed += speed
   end
 
   def print_speed
@@ -40,7 +39,7 @@ class Train
   end
 
   def each_carriages
-    @carriages.each{ |i| yield i }
+    @carriages.each { |i| yield i }
   end
 
   def current_station
@@ -55,19 +54,21 @@ class Train
     identify_station(1)
   end
 
-  def identify_station(n = 0)
-    route_set? ? 
-    @route.stations[@current_number_station + n] : 
-    raise_route_not_set
+  def identify_station(number = 0)
+    if route_set?
+      @route.stations[@current_number_station + number]
+    else
+      raise_route_not_set
+    end
   end
 
-  def add_carriage carriage
-    valid_carriage?(carriage) 
+  def add_carriage(carriage)
+    valid_carriage?(carriage)
     stop?
     @carriages << carriage
   end
 
-  def delete_carriage carriage
+  def delete_carriage(carriage)
     stop?
     @carriages.delete(carriage.number)
   end
@@ -83,27 +84,27 @@ class Train
   end
 
   def stop?
-    raise_not_stop unless @speed == 0
+    raise_not_stop unless @speed.zero?
   end
 
   def raise_not_stop
-    raise "Speed must equals 0."
+    raise 'Speed must equals 0.'
   end
 
   def raise_route_not_set
-    raise "Route not set."
+    raise 'Route not set.'
   end
 
   def valid?
-    raise ArgumentError.new("Number format must equals #{NUMBER_FORMAT}") unless valid_number? @number
-    raise ArgumentError.new("Number class must equals 'String'") unless @number.class == String
+    raise ArgumentError.new('Number format must equals', NUMBER_FORMAT) unless valid_number? @number
+    raise ArgumentError.new('Number class must equals', 'String') unless @number.class == String
   end
 
-  def valid_number? number
+  def valid_number?(number)
     NUMBER_FORMAT.match(number)
   end
 
-  def valid_carriage? carriage
+  def valid_carriage?(carriage)
     carriage.type == type ? true : raise_not_valid_carriage
   end
 
