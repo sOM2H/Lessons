@@ -1,4 +1,4 @@
-require "./modules/manufacturer"
+require './modules/manufacturer'
 
 class Carriage
   include Manufacturer
