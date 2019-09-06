@@ -1,14 +1,23 @@
 require './models/train'
+require './modules/accessor'
 
 class Station
-  attr_reader :name, :trains
+  include Validation
+  include Acessors
+
+  strong_attr_accessor :name, String
+  attr_accessor_with_history :trains
+
+  validate(:name, :format, '\A[A-Z]{1}\w{2,}\z')
 
   @@instanses = []
 
   def initialize(name)
     @name = name
     @trains = []
-    @@instanses << self if valid?
+    validate!
+
+    @@instanses << self 
   end
 
   class << self
@@ -36,21 +45,5 @@ class Station
 
   def departure_train(train_name)
     @trains.delete_if { |t| t.name == train_name }
-  end
-
-  private
-
-  def valid?
-    raise ArgumentError.new('Name class must equals', 'String') unless @name.class == String
-
-    true
-  end
-
-  def valid_train?(train)
-    raise_not_valid_train unless train.class.superclass == Train
-  end
-
-  def raise_not_valid_train
-    raise "Train class must equals 'Train'."
   end
 end
