@@ -16,7 +16,7 @@ def load_seeds
   cargo_train = CargoTrain.new('000-00')
   passenger_train = PassengerTrain.new('000-01')
   3.times do |i|
-    @stations << Station.new("Station #{i}")
+    @stations << Station.new("STATION#{i}")
   end
   10.times do
     cargo_carriage = CargoCarriage.new(200)
